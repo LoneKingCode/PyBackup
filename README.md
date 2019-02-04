@@ -6,7 +6,7 @@
 
 同步备份文件到Ftp,Email,阿里云Oss,腾讯云Cos 还有本地，并删除指定天数的旧备份文件
 
-![](header.png)
+![](header.png) 
 
 ### 需要的环境
 ```
