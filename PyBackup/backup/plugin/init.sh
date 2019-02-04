@@ -93,7 +93,6 @@ Centos_yum()
 	rm -rf /var/lib/apt/lists/partial/*
 	yum -y update
 	yum -y install p7zip unzip
-	ln -s /usr/bin/7za /usr/bin/7z
 	yum -y groupinstall 'Development Tools'
 	yum -y install zlib zlib-devel bzip2-devel  openssl-devel ncurses-devel
 }
