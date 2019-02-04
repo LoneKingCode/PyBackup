@@ -278,7 +278,7 @@ class FileHelper(object):
             cmd = WINDOWS_7ZIP_PATH + ' a -t{0} {1} {2} {3}'.format(type,pwdcmd,save_file_path,filepath)
         elif sysstr == "Linux":
             pwdcmd = '-p' + pwd if pwd  else ''
-            cmd = '7z a -t{0} {1} {2} {3}'.format(type,pwdcmd,save_file_path,filepath)
+            cmd = '7za a -t{0} {1} {2} {3}'.format(type,pwdcmd,save_file_path,filepath)
         else:
             return False,sysstr + '是啥系统?'
         status,result = subprocess.getstatusoutput(cmd)

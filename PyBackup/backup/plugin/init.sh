@@ -52,55 +52,57 @@ Check_python(){
 		wget -N --no-check-certificate https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tgz && tar zxvf Python-3.6.3.tgz && cd Python-3.6.3
 		./configure --prefix=/opt/Python
 		make && make install
+		rm -rf /usr/bin/python3
 		ln -s /opt/Python/bin/python3 /usr/bin/python3
+		cd ..
 	else
 		echo -e "${Info} 安装Python3成功..."
 	fi
 	pip = 'pip3'
 	if [[ -z ${pip} ]]; then
 		echo -e "${Error} 安装Pip3失败，尝试编译安装..."
-		wget --no-check-certificate  https://pypi.python.org/packages/source/s/setuptools/setuptools-19.6.tar.gz#md5=c607dd118eae682c44ed146367a17e26
-		tar -zxvf setuptools-19.6.tar.gz
-		cd setuptools-19.6.tar.gz
-		python3 setup.py build
+		wget https://pypi.python.org/packages/41/80/268fda78a53c2629128f8174d2952c7f902c93ebaa2062b64f27aa101b07/setuptools-38.2.3.zip#md5=0ae64455d276ff864b40aca9c06ea7c1
+		unzip setuptools-38.2.3.zip
+		cd setuptools-38.2.3
 		python3 setup.py install
-		wget --no-check-certificate  https://pypi.python.org/packages/source/p/pip/pip-8.0.2.tar.gz#md5=3a73c4188f8dbad6a1e6f6d44d117eeb
-		tar -zxvf pip-8.0.2.tar.gz
-		cd pip-8.0.2
-		python3 setup.py build
+		cd ..
+		wget https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9
+		tar xf pip-9.0.1.tar.gz
+		cd pip-9.0.1
 		python3 setup.py install
+		rm -rf /usr/bin/pip3
+	    ln -s /opt/Python/bin/pip3 /usr/bin/pip3
 	else
 		echo -e "${Info} 安装Pip3成功..."
 	fi
 	pip = 'pip3'
 	python_ver=`python3 -h`
 	if [[ -z ${python_ver} ]]; then
-		echo -e "${Error} 安装Python3失败，尝试编译安装..."
+		echo -e "${Error} 安装Python3失败..."
+	fi
 	if [[ -z ${pip} ]]; then
 		echo -e "${Error} 安装Pip3失败..."
-	#安装依赖
-	if [[ ${release} == "centos" ]]; then
-			pip3 install --upgrade pip
-			pip3 install oss2 cos-python-sdk-v5
-
-		else
-			pip3 install --upgrade pip
-			pip3 install oss2 cos-python-sdk-v5
 	fi
+	#安装依赖
+	pip3 install --upgrade pip
+    pip3 install oss2 cos-python-sdk-v5
 }
 Centos_yum()
 {
 	rm -rf /var/lib/apt/lists/*
 	rm -rf /var/lib/apt/lists/partial/*
 	yum -y update
-	yum install -y p7zip-full unzip
+	yum -y install p7zip unzip
+	ln -s /usr/bin/7za /usr/bin/7z
+	yum -y groupinstall 'Development Tools'
+	yum -y install zlib zlib-devel bzip2-devel  openssl-devel ncurses-devel
 }
 Debian_apt()
 {
     rm -rf /var/lib/apt/lists/*
 	rm -rf /var/lib/apt/lists/partial/*
 	apt-get -y update
-	apt-get install -y p7zip-full unzip
+	apt-get install -y p7zip p7zip-full unzip
 }
 Download_backup_code()
 {

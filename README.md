@@ -12,7 +12,7 @@
 ```
 python3以及python3中的库oss2和cos-python-sdk-v5
 windows上需要7z.exe，mysqldump.exe,SQLCMD.exe,SQLCMD.rll 在本程序已中自带有无需下载
-linux上需要安装p7zip-full,mysqldump是安装mysql时附带的,sqlcmd这个是mssql的命令行工具,linux上也有https://docs.microsoft.com/zh-cn/sql/linux/sql-server-linux-setup-tools?view=sql-server-2017 暂时不整理 
+linux上需要安装p7zip(确保7za命令可以执行),mysqldump是安装mysql时附带的,sqlcmd这个是mssql的命令行工具,linux上也有https://docs.microsoft.com/zh-cn/sql/linux/sql-server-linux-setup-tools?view=sql-server-2017 暂时不整理 
 如果以下一键包安装出现问题，在安装python3成功后自行安装依赖库
 pip3 install --upgrade pip
 pip3 install oss2 cos-python-sdk-v5
@@ -22,6 +22,7 @@ Linux一键包
 
 ```sh
 wget --no-check-certificate https://raw.githubusercontent.com/LoneKingCode/PyBackup/master/PyBackup/backup/plugin/init.sh && bash init.sh
+安装完输入python3 -h 和pip3 -h  还有7za 查看结果 判断是否安装成功
 然后自行设置计划任务 使用crontab或者面板内自带计划
 本程序目录/plugin/cron.sh为使用crontab设置计划任务 自行修改里面路径后执行sh cron.sh 即可
 backup.py为主程序 设置的命令为 python3 yourPath/backup.py
@@ -32,6 +33,7 @@ Windows
 
 ```sh
 首先下载安装python3.6.3 https://www.python.org/ftp/python/3.6.3/python-3.6.3.exe
+安装完命令提示符中输入python3 -h 和pip3 -h 命令看结果 判断是否安装成功
 然后下载本程序并解压 https://github.com/LoneKingCode/PyBackup/releases
 然后修改本程序目录中/backup/plugin/init.bat 批处理文件中这一行命令
 schtasks /create /tn "backup_web_db" /ru system /tr "python3 /yourPath/backup.py" /sc DAILY /st 01:00
