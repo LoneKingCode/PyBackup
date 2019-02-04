@@ -3,6 +3,8 @@
 #apt-get install p7zip-full
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
+export LANG=UTF-8
+export LANGUAGE=UTF-8
 
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
 Info="${Green_font_prefix}[信息]${Font_color_suffix}"
@@ -44,6 +46,38 @@ Check_python(){
 			pip3 install oss2 cos-python-sdk-v5
 		fi
 	fi
+	python_ver=`python3 -h`
+	if [[ -z ${python_ver} ]]; then
+		echo -e "${Error} 安装Python3失败，尝试编译安装..."
+		wget -N --no-check-certificate https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tgz && tar zxvf Python-3.6.3.tgz && cd Python-3.6.3
+		./configure --prefix=/opt/Python
+		make && make install
+		ln -s /opt/Python/bin/python3 /usr/bin/python3
+	else
+		echo -e "${Info} 安装Python3成功..."
+	fi
+	pip = 'pip3'
+	if [[ -z ${pip} ]]; then
+		echo -e "${Error} 安装Pip3失败，尝试编译安装..."
+		wget --no-check-certificate  https://pypi.python.org/packages/source/s/setuptools/setuptools-19.6.tar.gz#md5=c607dd118eae682c44ed146367a17e26
+		tar -zxvf setuptools-19.6.tar.gz
+		cd setuptools-19.6.tar.gz
+		python3 setup.py build
+		python3 setup.py install
+		wget --no-check-certificate  https://pypi.python.org/packages/source/p/pip/pip-8.0.2.tar.gz#md5=3a73c4188f8dbad6a1e6f6d44d117eeb
+		tar -zxvf pip-8.0.2.tar.gz
+		cd pip-8.0.2
+		python3 setup.py build
+		python3 setup.py install
+	else
+		echo -e "${Info} 安装Pip3成功..."
+	fi
+	pip = 'pip3'
+	python_ver=`python3 -h`
+	if [[ -z ${python_ver} ]]; then
+		echo -e "${Error} 安装Python3失败，尝试编译安装..."
+	if [[ -z ${pip} ]]; then
+		echo -e "${Error} 安装Pip3失败..."
 	#安装依赖
 	if [[ ${release} == "centos" ]]; then
 			yum install python3-pip
@@ -60,14 +94,14 @@ Centos_yum()
 {
 	rm -rf /var/lib/apt/lists/*
 	rm -rf /var/lib/apt/lists/partial/*
-	yum update
+	yum -y update
 	yum install -y p7zip-full unzip
 }
 Debian_apt()
 {
     rm -rf /var/lib/apt/lists/*
 	rm -rf /var/lib/apt/lists/partial/*
-	apt-get update
+	apt-get -y update
 	apt-get install -y p7zip-full unzip
 }
 Download_backup_code()
