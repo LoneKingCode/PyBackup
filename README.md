@@ -28,7 +28,7 @@ Windows
 
 ```sh
 首先下载安装python3.6.3 https://www.python.org/ftp/python/3.6.3/python-3.6.3.exe
-然后修改程序目录中/backup/plugin/init.bat 批处理文件中中这一行命令
+然后修改程序目录中/backup/plugin/init.bat 批处理文件中这一行命令
 schtasks /create /tn "backup_web_db" /ru system /tr "python3 /yourPath/backup.py" /sc DAILY /st 01:00
 修改backup_web_db为计划任务名称,修改yourPath为文件实际位置,DATLY为每日,01:00 凌晨一点执行
 想计划为其他周期自行百度schtasks或者windows添加计划任务

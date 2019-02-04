@@ -95,14 +95,17 @@ def clear_old_backup():
 
 #是否为旧文件
 def is_oldfile(filename):
-    filenames = filename.split('_')  #name_'%Y-%m-%d-%H-%M-%S.zip'
-    filedatestr = filenames[1].split('-')[:6]
-    filedatestr[5] = filedatestr[5].split('.')[0]
-    filedatestr = '-'.join(filedatestr)
-    filedate = datetime.datetime.strptime(filedatestr, '%Y-%m-%d-%H-%M-%S')
-    keep_date = datetime.datetime.now() - datetime.timedelta(days=KEEP_DAYS)
-    #如果文件日期在要保留的日期之前
-    return filedate < keep_date
+    try:
+        filenames = filename.split('_')  #name_'%Y-%m-%d-%H-%M-%S.zip'
+        filedatestr = filenames[1].split('-')[:6]
+        filedatestr[5] = filedatestr[5].split('.')[0]
+        filedatestr = '-'.join(filedatestr)
+        filedate = datetime.datetime.strptime(filedatestr, '%Y-%m-%d-%H-%M-%S')
+        keep_date = datetime.datetime.now() - datetime.timedelta(days=KEEP_DAYS)
+        #如果文件日期在要保留的日期之前
+        return filedate < keep_date
+    except :
+        return False
 
 #远程保存
 def remote_save(site_files,db_files):

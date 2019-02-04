@@ -1,7 +1,6 @@
 import os
-import environ
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ROOT_DIR = environ.Path(__file__) - 1
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 #备份的站点目录
 #type: local,ftp local(本地),ftp(远程站点备份)
@@ -24,11 +23,11 @@ SITES = [{ 'type':'local','path':'D:\\wwwroot\\www.aa.com',
 #archive_password: 压缩包密码
 #sqlcmd_path 或 mysqldump_path : mssql和mysql命令行工具路径 windows下无需修改 linux请设置为''
 #***注意***
-#设置备份远程数据库时 请在远程数据库中设置为备份机IP可连接或任意IP可连接
+#设置备份远程数据库时 请在数据库中设置为备份机IP可连接或任意IP可连接(mysql添加用户且设置Host为%或指定IP)
 #mysql
-#linux确保mysqldump命令可以直接执行,windows下设置mysqldump.exe位置,本程序plugin目录自带有(MYSQL5.7)
+#linux如果mysqldump命令可以直接执行的话sqlcmd_path设置为'',否则设置为实际路径,windows下设置mysqldump.exe位置,本程序plugin目录自带有(MYSQL5.7)
 #mssql(Sql Server)
-#linux确保SQLCMD命令可以直接执行,#windows下设置SQLCMD.exe位置,本程序plugin目录自带有(SQLSERVER2014)
+#linux确保SQLCMD命令可以直接执行的话mysqldump_path设置为'',windows下设置SQLCMD.exe位置,本程序plugin目录自带有(SQLSERVER2014)
 #命令行工具有需要可在plugin目录替换为你需要的版本
 DATABASES = [{'type':'mssql','database_name':'yourDatabaseName','username':'sa','password':'123','host':'123.123.123.123',
               'archive_type':'zip','archive_password':'123','sqlcmd_path':os.path.join(str(ROOT_DIR),'plugin') + '\\SQLCMD.exe'},

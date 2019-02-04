@@ -44,23 +44,38 @@ Check_python(){
 			pip3 install oss2 cos-python-sdk-v5
 		fi
 	fi
+	#°²×°ÒÀÀµ
+	if [[ ${release} == "centos" ]]; then
+			yum install python3-pip
+			pip3 install --upgrade pip
+			pip3 install oss2 cos-python-sdk-v5
+
+		else
+			apt-get install python3-pip
+			pip3 install --upgrade pip
+			pip3 install oss2 cos-python-sdk-v5
+	fi
 }
 Centos_yum()
 {
+	rm -rf /var/lib/apt/lists/*
+	rm -rf /var/lib/apt/lists/partial/*
 	yum update
 	yum install -y p7zip-full unzip
 }
 Debian_apt()
 {
+    rm -rf /var/lib/apt/lists/*
+	rm -rf /var/lib/apt/lists/partial/*
 	apt-get update
 	apt-get install -y p7zip-full unzip
 }
 Download_backup_code()
 {
 	cd "/usr/local/"
-	wget -N --no-check-certificate "https://github.comXXXXXXXXXX/archive/AutoBackup.zip"
-	unzip AutoBackup.zip
-	rm -rf AutoBackup.zip
+	wget -N --no-check-certificate "https://github.com/LoneKingCode/PyBackup/archive/1.0.zip"
+	unzip PyBackup1.0.zip
+	rm -rf PyBackup1.0.zip
 }
 Start()
 {
@@ -70,6 +85,7 @@ Start()
 		Centos_yum
 	else
 		Debian_apt
+	fi
 	Check_python
 	Download_backup_code
 }
