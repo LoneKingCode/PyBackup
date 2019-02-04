@@ -22,6 +22,7 @@ Linux一键配置环境
 
 ```sh
 wget --no-check-certificate https://raw.githubusercontent.com/LoneKingCode/PyBackup/master/PyBackup/backup/plugin/init.sh -O pybackup.sh && bash pybackup.sh
+执行完本程序存放在脚本同目录
 安装完输入python3 -h 和pip3 -h  还有7za 查看结果 判断是否安装成功
 然后自行设置计划任务 使用crontab或者面板内自带计划
 本程序目录/plugin/cron.sh为使用crontab设置计划任务 自行修改里面路径后执行sh cron.sh 即可
