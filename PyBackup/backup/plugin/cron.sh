@@ -1,3 +1,4 @@
-cat > /etc/crontab <<-EOF
-"00 02 * * * root python3 /home/backup.py" >>
-EOF
+cat << EOF >> /etc/crontab
+
+00 02 * * * root python3 /home/backup.py
+

@@ -23,6 +23,7 @@ Linux一键包
 ```sh
 wget --no-check-certificate https://raw.githubusercontent.com/LoneKingCode/PyBackup/master/PyBackup/backup/plugin/init.sh && bash init.sh
 然后自行设置计划任务 使用crontab或者面板内自带计划
+本程序目录/plugin/cron.sh为使用crontab设置计划任务 自行修改里面路径后执行sh cron.sh 即可
 backup.py为主程序 设置的命令为 python3 yourPath/backup.py
 ```
 
