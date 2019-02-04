@@ -22,6 +22,8 @@ Linux一键包
 
 ```sh
 wget --no-check-certificate https://raw.githubusercontent.com/LoneKingCode/PyBackup/master/PyBackup/backup/plugin/init.sh && bash init.sh
+然后自行设置计划任务 使用crontab或者面板内自带计划
+backup.py为主程序 设置的命令为 python3 yourPath/backup.py
 ```
 
 
@@ -29,7 +31,7 @@ Windows
 
 ```sh
 首先下载安装python3.6.3 https://www.python.org/ftp/python/3.6.3/python-3.6.3.exe
-然后下载本程序并解压[@https://github.com/LoneKingCode/PyBackup/archive/1.0.zip](https://github.com/LoneKingCode/PyBackup/archive/1.0.zip) 
+然后下载本程序并解压 https://github.com/LoneKingCode/PyBackup/releases
 然后修改本程序目录中/backup/plugin/init.bat 批处理文件中这一行命令
 schtasks /create /tn "backup_web_db" /ru system /tr "python3 /yourPath/backup.py" /sc DAILY /st 01:00
 修改backup_web_db为计划任务名称,修改yourPath为文件实际位置,DATLY为每日,01:00 凌晨一点执行
@@ -50,7 +52,7 @@ init.bat作用是安装python3依赖库及设置计划任务
 
 #备份的站点目录
 #type: local,ftp local(本地),ftp(远程站点备份)
-#path: 要备份的目录
+#path: 要备份的目录  windows下记得是双斜杠\\ linux下用/就行 比如/home/wwwroot/myweb
 #archive_type: 7z,zip,tar(7zip支持的类型)
 #archive_password: 压缩包密码
 #type为ftp时需要额外配置: host:FTP服务器地址 port:端口 username:用户名 password:密码
@@ -143,9 +145,7 @@ WINDOWS_7ZIP_PATH = os.path.join(str(ROOT_DIR),'plugin') + '\\7z.exe'
 ```
 
 ```
-然后设置计划任务执行命令为 python3 backup.py
-##windows
-程序目录plugin/init.bat
+backup.py为主程序 如果要设置计划任务 设置为 python3 yourPath/backup.py
 ```
 
 ## 更新历史
