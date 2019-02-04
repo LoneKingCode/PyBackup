@@ -72,10 +72,9 @@ Debian_apt()
 }
 Download_backup_code()
 {
-	cd "/usr/local/"
-	wget -N --no-check-certificate "https://github.com/LoneKingCode/PyBackup/archive/1.0.zip"
-	unzip PyBackup1.0.zip
-	rm -rf PyBackup1.0.zip
+	wget -N --no-check-certificate "https://github.com/LoneKingCode/PyBackup/archive/1.0.zip" -O PyBackup.zip
+	unzip PyBackup.zip
+	rm -rf PyBackup.zip
 }
 Start()
 {
@@ -88,6 +87,7 @@ Start()
 	fi
 	Check_python
 	Download_backup_code
+	echo -e "${Info} 执行结束，程序在脚本执行目录..."
 }
 
 Start

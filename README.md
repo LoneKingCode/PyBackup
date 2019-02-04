@@ -8,17 +8,16 @@
 
 ![](header.png)
 
-## 安装
 ### 需要的环境
 ```
 python3以及python3中的库oss2和cos-python-sdk-v5
-windows上需要7z.exe，mysqldump.exe,SQLCMD.exe,SQLCMD.rll 在本程序已自带有
-linux上需要安装p7zip-full和unzip,mysqldump是安装mysql时附带的,sqlcmd这个是mssql的命令行工具,linux上也有https://docs.microsoft.com/zh-cn/sql/linux/sql-server-linux-setup-tools?view=sql-server-2017 暂时不整理 
-如果以下安装出现问题，在安装python3成功后自行安装依赖库
+windows上需要7z.exe，mysqldump.exe,SQLCMD.exe,SQLCMD.rll 在本程序已中自带有无需下载
+linux上需要安装p7zip-full,mysqldump是安装mysql时附带的,sqlcmd这个是mssql的命令行工具,linux上也有https://docs.microsoft.com/zh-cn/sql/linux/sql-server-linux-setup-tools?view=sql-server-2017 暂时不整理 
+如果以下一键包安装出现问题，在安装python3成功后自行安装依赖库
 pip3 install --upgrade pip
 pip3 install oss2 cos-python-sdk-v5
 ```
-### 下载本程序以及安装Python3及依赖库
+### 安装
 Linux一键包
 
 ```sh
@@ -30,11 +29,13 @@ Windows
 
 ```sh
 首先下载安装python3.6.3 https://www.python.org/ftp/python/3.6.3/python-3.6.3.exe
-然后修改程序目录中/backup/plugin/init.bat 批处理文件中这一行命令
+然后下载本程序并解压[@https://github.com/LoneKingCode/PyBackup/archive/1.0.zip](https://github.com/LoneKingCode/PyBackup/archive/1.0.zip) 
+然后修改本程序目录中/backup/plugin/init.bat 批处理文件中这一行命令
 schtasks /create /tn "backup_web_db" /ru system /tr "python3 /yourPath/backup.py" /sc DAILY /st 01:00
 修改backup_web_db为计划任务名称,修改yourPath为文件实际位置,DATLY为每日,01:00 凌晨一点执行
 想计划为其他周期自行百度schtasks或者windows添加计划任务
 修改完成保存后 双击 init.bat运行即可
+init.bat作用是安装python3依赖库及设置计划任务
 ```
 
 ## 使用方法
@@ -47,7 +48,7 @@ schtasks /create /tn "backup_web_db" /ru system /tr "python3 /yourPath/backup.py
 修改config.py中配置
 ```python
 
- #备份的站点目录
+#备份的站点目录
 #type: local,ftp local(本地),ftp(远程站点备份)
 #path: 要备份的目录
 #archive_type: 7z,zip,tar(7zip支持的类型)
@@ -143,6 +144,8 @@ WINDOWS_7ZIP_PATH = os.path.join(str(ROOT_DIR),'plugin') + '\\7z.exe'
 
 ```
 然后设置计划任务执行命令为 python3 backup.py
+##windows
+程序目录plugin/init.bat
 ```
 
 ## 更新历史
