@@ -16,6 +16,7 @@ linux上需要安装p7zip(确保7za命令可以执行),mysqldump是安装mysql�
 如果以下一键包安装出现问题，在安装python3成功后自行安装依赖库
 pip3 install --upgrade pip
 pip3 install oss2 cos-python-sdk-v5
+注：如果linux下也想备份远程mssql(SqlServer)的话自行参考https://docs.microsoft.com/zh-cn/sql/linux/sql-server-linux-setup-tools?view=sql-server-2017安装sqlcmd工具
 ```
 ### 安装
 Linux一键配置环境
