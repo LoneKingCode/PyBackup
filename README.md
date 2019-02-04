@@ -144,7 +144,7 @@ WINDOWS_7ZIP_PATH = os.path.join(str(ROOT_DIR),'plugin') + '\\7z.exe'
 ```
 
 ## 更新历史
-* 0.0.1
+* 1.0
     * 能用
 
 ## 关于作者
