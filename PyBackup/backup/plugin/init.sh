@@ -102,6 +102,11 @@ Debian_apt()
     rm -rf /var/lib/apt/lists/*
 	rm -rf /var/lib/apt/lists/partial/*
 	apt-get -y update
+    apt-get install build-essential -y
+    apt-get install libncurses5-dev libncursesw5-dev libreadline6-dev -y
+    apt-get install libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev -y
+    apt-get install libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev -y
+    apt-get install libssl-dev openssl -y
 	apt-get install -y p7zip p7zip-full unzip
 }
 Download_backup_code()
