@@ -80,12 +80,10 @@ Check_python(){
 		echo -e "${Error} 安装Pip3失败..."
 	#安装依赖
 	if [[ ${release} == "centos" ]]; then
-			yum install python3-pip
 			pip3 install --upgrade pip
 			pip3 install oss2 cos-python-sdk-v5
 
 		else
-			apt-get install python3-pip
 			pip3 install --upgrade pip
 			pip3 install oss2 cos-python-sdk-v5
 	fi
