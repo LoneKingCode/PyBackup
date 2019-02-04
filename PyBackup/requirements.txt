@@ -1,0 +1,2 @@
+oss2
+cos-python-sdk-v5
