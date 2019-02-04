@@ -78,7 +78,7 @@ SITES = [{ 'type':'local','path':'D:\\wwwroot\\www.aa.com',
 #mysql
 #linux如果mysqldump命令可以直接执行的话sqlcmd_path设置为'',否则设置为实际路径,windows下设置mysqldump.exe位置,本程序plugin目录自带有(MYSQL5.7)
 #mssql(Sql Server)
-#linux确保SQLCMD命令可以直接执行的话mysqldump_path设置为'',windows下设置SQLCMD.exe位置,本程序plugin目录自带有(SQLSERVER2014)
+#linux如果SQLCMD命令可以直接执行的话mysqldump_path设置为'',windows下设置SQLCMD.exe位置,本程序plugin目录自带有(SQLSERVER2014)
 #命令行工具有需要可在plugin目录替换为你需要的版本
 DATABASES = [{'type':'mssql','database_name':'yourDatabaseName','username':'sa','password':'123','host':'123.123.123.123',
               'archive_type':'zip','archive_password':'123','sqlcmd_path':os.path.join(str(ROOT_DIR),'plugin') + '\\SQLCMD.exe'},
