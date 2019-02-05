@@ -144,7 +144,7 @@ EMAIL_OPTIONS_RECEIVERS = ['receivebackup@foxmail.com',]
 
 #7z.exe位置 利用7zip来压缩
 #只有windows需要(在程序plugin目录中已经附带有了
-#linux安装过"p7zip-full"就行
+#linux安装过"p7zip"就行
 WINDOWS_7ZIP_PATH = os.path.join(str(ROOT_DIR),'plugin') + '\\7z.exe'
 
 ```
