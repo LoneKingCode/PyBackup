@@ -339,7 +339,7 @@ def start():
     try:
         backup()
     except Exception as e:
-        LogHelper.error('哎呀 出错了:' + str(e))
+        log('哎呀 出错了:' + str(e))
     endtime = datetime.datetime.now()
     log('本次备份完成，耗时{0}秒'.format((endtime - starttime).seconds))
 
