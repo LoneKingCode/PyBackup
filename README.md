@@ -183,5 +183,5 @@ backup.py为主程序 如果要设置计划任务 设置为 python3 yourPath/bac
 LoneKing – [@LoneKing's Blog](https://loneking.net) 
 
 
-[https://github.com/LoneKingCode/AutoBackup](https://github.com/LoneKingCode/AutoBackup)
+[https://github.com/LoneKingCode/PyBackup](https://github.com/LoneKingCode/PyBackup)
 
