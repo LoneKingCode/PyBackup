@@ -6,7 +6,6 @@
 
 同步备份文件到Ftp,阿里云Oss,腾讯云Cos,OneDrive,Email,还有本地，并删除指定天数的旧备份文件
 
-![](header.png) 
 
 ### 需要的环境
 ```
@@ -97,10 +96,10 @@ LOCAL_SAVE_PATH = {'sites':'D:\\Save\\backup\\sites','databases':'D:\\Save\\back
 TEMP_SAVE_PATH = 'D:\\Save\\backuptemp'
 
 #远程备份类型 为空则只保存到本地
-#可选 ftp,email,oss,cos
+#可选 ftp,email,oss,cos,onedrive
 #***注意***
 #email的话注意附件大小 有的限制是25MB 有的是50MB
-REMOTE_SAVE_TYPE = ['oss','cos','ftp','email']
+REMOTE_SAVE_TYPE = ['oss','cos','ftp','onedrive']
 
 #FTP备份配置
 #host: FTP服务器地址
@@ -159,13 +158,20 @@ WINDOWS_7ZIP_PATH = os.path.join(str(ROOT_DIR),'plugin') + '\\7z.exe'
 
 ```
 
+### onedrive认证方法
+```
+运行python3 auth_onedrive.py
+```
+![](https://i.loli.net/2019/02/06/5c5a90ad4f540.png) 
+![](https://i.loli.net/2019/02/06/5c5a909812f68.png) 
+
 ```
 backup.py为主程序 如果要设置计划任务 设置为 python3 yourPath/backup.py
 ```
 
 ## 更新历史
 * 1.2
-	* 支持备份到onedrive
+    * 支持备份到onedrive
 * 1.1
     * 能用
 
