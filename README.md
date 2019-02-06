@@ -160,7 +160,7 @@ WINDOWS_7ZIP_PATH = os.path.join(str(ROOT_DIR),'plugin') + '\\7z.exe'
 
 ### onedrive认证方法
 ```
-运行python3 auth_onedrive.py
+修改config.py中配置后，程序目录运行python3 auth_onedrive.py
 ```
 ![](https://i.loli.net/2019/02/06/5c5a90ad4f540.png) 
 ![](https://i.loli.net/2019/02/06/5c5a909812f68.png) 
