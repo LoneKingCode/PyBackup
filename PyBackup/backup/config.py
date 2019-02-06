@@ -81,7 +81,7 @@ COS_OPTIONS = [{'sitedir':'sites','databasedir':'databases','region':'ap-hongkon
 
 #OneDrive配置
 #name: 名称
-#用于区别配置文件中配置，可以设置为多个{'name':'backup1'},{'name':'backup2'}，这样的话需要你认证多次不同账户
+#用于区别配置文件中配置，可以设置为多个{'name':'backup1' .....},{'name':'backup2'.....}，这样的话需要你认证多次不同账户
 #sitedir: 站点备份文件保存目录
 #databasedir: 数据库文件保存目录
 ONE_DRIVE_OPTION = [{'name':'backup1','sitedir':'sites','databasedir':'databases',}]
