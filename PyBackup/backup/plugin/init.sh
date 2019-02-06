@@ -95,6 +95,7 @@ Centos_yum()
 	yum -y install p7zip unzip
 	yum -y groupinstall 'Development Tools'
 	yum -y install zlib zlib-devel bzip2-devel  openssl-devel ncurses-devel
+	yum -y install git
 }
 Debian_apt()
 {
@@ -106,13 +107,11 @@ Debian_apt()
     apt-get install libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev -y
     apt-get install libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev -y
     apt-get install libssl-dev openssl -y
-	apt-get install -y p7zip p7zip-full unzip
+	apt-get install -y p7zip p7zip-full unzip git
 }
 Download_backup_code()
 {
-	wget -N --no-check-certificate "https://github.com/LoneKingCode/PyBackup/archive/1.2.zip" -O PyBackup.zip
-	unzip PyBackup.zip
-	rm -rf PyBackup.zip
+	git clone https://github.com/LoneKingCode/PyBackup.git
 }
 Start()
 {
