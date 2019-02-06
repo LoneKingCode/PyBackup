@@ -2,13 +2,14 @@ import os
 import sys
 import datetime
 import subprocess
-from util.ftphelper import FtpHelper
-from util.emailhelper import EmailHelper
-from util.loghelper import LogHelper
-from util.filehelper import FileHelper
-from util.coshelper import CosHelper
-from util.osshelper import OssHelper
-from config import *
+from  util.ftphelper import FtpHelper
+from  util.emailhelper import EmailHelper
+from  util.loghelper import LogHelper
+from  util.filehelper import FileHelper
+from  util.coshelper import CosHelper
+from  util.osshelper import OssHelper
+from  util.onedrivehelper import OneDriveHelper
+from  config import *
 
 def log(msg):
     print(msg)
@@ -91,6 +92,16 @@ def clear_old_backup():
         for file in cos.get_file_list(option['sitedir'].rstrip('/') + '/') + cos.get_file_list(option['databasedir'].rstrip('/') + '/'):
             if is_oldfile(os.path.basename(file)):
                 cos.delete(file)
+
+    #清除onedrive旧文件
+    for option in ONE_DRIVE_OPTION:
+        od = OneDriveHelper(option['name'])
+        for file in od.get_file_list(option['sitedir'].rstrip('/') + '/'):
+            if is_oldfile(os.path.basename(file['name'])):
+                od.delete(os.path.join(option['sitedir'],file['name']))
+        for file in od.get_file_list(option['databasedir'].rstrip('/') + '/'):
+            if is_oldfile(os.path.basename(file['name'])):
+                od.delete(os.path.join(option['databasedir'],file['name']))
     log('清除旧备份文件 完成')
 
 #是否为旧文件
@@ -110,7 +121,7 @@ def is_oldfile(filename):
 #远程保存
 def remote_save(site_files,db_files):
     for type in REMOTE_SAVE_TYPE:
-        if type not in 'ftp,email,cos,oss':
+        if type not in 'ftp,email,cos,oss,onedrive':
             log('远程保存配置类型"' + type + '"错误，应该为ftp,email')
             continue
         if type == 'ftp':
@@ -121,8 +132,28 @@ def remote_save(site_files,db_files):
             remote_save_oss(site_files,db_files)
         elif type == 'cos':
             remote_save_cos(site_files,db_files)
+        elif type == 'onedrive':
+            remote_save_onedrive(site_files,db_files)
     FileHelper.move_bulk(site_files,LOCAL_SAVE_PATH['sites'])
     FileHelper.move_bulk(db_files,LOCAL_SAVE_PATH['databases'])
+
+#远程保存到onedrive
+def remote_save_onedrive(site_files,db_files):
+    log('开始上传到OneDrive')
+    for option in ONE_DRIVE_OPTION:
+        print('开始上传到:' + option['name'])
+        od = OneDriveHelper(option['name'])
+        for file in site_files:
+            if not file:
+                continue
+            filename = os.path.basename(file)
+            od.upload(option['sitedir'].rstrip('/') + '/' + filename,file)
+        for file in db_files:
+            if not file:
+                continue
+            filename = os.path.basename(file)
+            od.upload(option['databasedir'].rstrip('/') + '/' + filename,file)
+    log('远程保存到OneDrive 完成')
 
 #远程保存到oss
 def remote_save_oss(site_files,db_files):

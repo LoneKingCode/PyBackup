@@ -22,8 +22,14 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="backup\auth_onedrive.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="backup\backup.py" />
     <Compile Include="backup\config.py" />
+    <Compile Include="backup\config_template.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="backup\myconfig.py">
       <SubType>Code</SubType>
     </Compile>
@@ -38,6 +44,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="backup\util\loghelper.py" />
+    <Compile Include="backup\util\onedrivehelper.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="backup\util\osshelper.py">
       <SubType>Code</SubType>
     </Compile>
@@ -52,6 +61,7 @@
   <ItemGroup>
     <Folder Include="backup\" />
     <Folder Include="backup\log\" />
+    <Folder Include="backup\data\" />
     <Folder Include="backup\plugin\" />
     <Folder Include="backup\util\" />
     <Folder Include="D:\MyProject\LoneKingCode\python\PyBackup\PyBackup\backup\" />

@@ -4,7 +4,7 @@
 
 可以备份本地站点及数据库(mysql,mssql)，和远程FTP站点及远程数据库(mysql,mssql),
 
-同步备份文件到Ftp,Email,阿里云Oss,腾讯云Cos 还有本地，并删除指定天数的旧备份文件
+同步备份文件到Ftp,阿里云Oss,腾讯云Cos,OneDrive,Email,还有本地，并删除指定天数的旧备份文件
 
 ![](header.png) 
 
@@ -132,6 +132,16 @@ OSS_OPTIONS = [{'sitedir':'sites','databasedir':'databases','url':'oss-xx-xxxx.a
 COS_OPTIONS = [{'sitedir':'sites','databasedir':'databases','region':'ap-hongkong','bucket':'bucketName',
                 'accesskeyid':'ASD123ASDASD123','accesskeysecret':'ASD123ASDASD123ASD'},]
 
+#OneDrive配置
+#name: 名称
+#用于区别配置文件中配置，可以设置为多个{'name':'backup1' .....},{'name':'backup2' .....}，这样的话需要你认证多次不同账户
+#sitedir: 站点备份文件保存目录
+#databasedir: 数据库文件保存目录
+ONE_DRIVE_OPTION = [{'name':'backup1','sitedir':'sites','databasedir':'databases',}]
+
+#默认无需修改 用于申请API访问 此处采用萌咖(MoeClub)提供的
+ONE_DRIVE_CLIENT = {'client_id':'ea2b36f6-b8ad-40be-bc0f-e5e4a4a7d4fa','client_secret':'h27zG8pr8BNsLU0JbBh5AOznNS5Of5Y540l/koc7048='}
+
 #Email备份配置
 
 #发送配置
@@ -154,6 +164,8 @@ backup.py为主程序 如果要设置计划任务 设置为 python3 yourPath/bac
 ```
 
 ## 更新历史
+* 1.2
+	* 支持备份到onedrive
 * 1.1
     * 能用
 

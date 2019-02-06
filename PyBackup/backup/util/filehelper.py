@@ -5,11 +5,25 @@ import zipfile
 import tarfile
 import subprocess
 import platform
+import json
 from util.stringhelper import StringHelper
 from config import WINDOWS_7ZIP_PATH
 
 
 class FileHelper(object):
+    @staticmethod
+    def open_json(filepath):
+        with open(filepath,'r') as f:
+            try:
+                data = json.load(f)
+                return data
+            except Exception as e:
+                return None
+
+    @staticmethod
+    def write_json(filepath,data):
+        with open(filepath,'w') as f:
+            json.dump(data,f,ensure_ascii=False)
 
     @staticmethod
     def delete(path):

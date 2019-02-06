@@ -25,9 +25,9 @@ SITES = [{ 'type':'local','path':'D:\\wwwroot\\www.aa.com',
 #***注意***
 #设置备份远程数据库时 请在数据库中设置为备份机IP可连接或任意IP可连接(mysql添加用户且设置Host为%或指定IP)
 #mysql
-#linux如果mysqldump命令可以直接执行的话sqlcmd_path设置为'',否则设置为实际路径,windows下设置mysqldump.exe位置,本程序plugin目录自带有(MYSQL5.7)
+#linux如果mysqldump命令可以直接执行的话mysqldump设置为'',否则设置为实际路径,windows下设置mysqldump.exe位置,本程序plugin目录自带有(MYSQL5.7)
 #mssql(Sql Server)
-#linux确保SQLCMD命令可以直接执行的话mysqldump_path设置为'',windows下设置SQLCMD.exe位置,本程序plugin目录自带有(SQLSERVER2014)
+#linux确保SQLCMD命令可以直接执行的话sqlcmd_path设置为'',windows下设置SQLCMD.exe位置,本程序plugin目录自带有(SQLSERVER2014)
 #命令行工具有需要可在plugin目录替换为你需要的版本
 DATABASES = [{'type':'mssql','database_name':'yourDatabaseName','username':'sa','password':'123','host':'123.123.123.123',
               'archive_type':'zip','archive_password':'123','sqlcmd_path':os.path.join(str(ROOT_DIR),'plugin') + '\\SQLCMD.exe'},
@@ -44,10 +44,10 @@ LOCAL_SAVE_PATH = {'sites':'D:\\Save\\backup\\sites','databases':'D:\\Save\\back
 TEMP_SAVE_PATH = 'D:\\Save\\backuptemp'
 
 #远程备份类型 为空则只保存到本地
-#可选 ftp,email,oss,cos
+#可选 ftp,email,oss,cos,onedrive
 #***注意***
 #email的话注意附件大小 有的限制是25MB 有的是50MB
-REMOTE_SAVE_TYPE = ['oss','cos','ftp','email']
+REMOTE_SAVE_TYPE = ['oss','cos','ftp','email','onedrive']
 
 #FTP备份配置
 #host: FTP服务器地址
@@ -78,6 +78,16 @@ OSS_OPTIONS = [{'sitedir':'sites','databasedir':'databases','url':'oss-xx-xxxx.a
 #accesskeysecret : AccessKeySecret
 COS_OPTIONS = [{'sitedir':'sites','databasedir':'databases','region':'ap-hongkong','bucket':'bucketName',
                 'accesskeyid':'ASD123ASDASD123','accesskeysecret':'ASD123ASDASD123ASD'},]
+
+#OneDrive配置
+#name: 名称
+#用于区别配置文件中配置，可以设置为多个{'name':'backup1'},{'name':'backup2'}，这样的话需要你认证多次不同账户
+#sitedir: 站点备份文件保存目录
+#databasedir: 数据库文件保存目录
+ONE_DRIVE_OPTION = [{'name':'backup1','sitedir':'sites','databasedir':'databases',}]
+
+#默认无需修改 用于申请API访问 此处采用萌咖(MoeClub)提供的
+ONE_DRIVE_CLIENT = {'client_id':'ea2b36f6-b8ad-40be-bc0f-e5e4a4a7d4fa','client_secret':'h27zG8pr8BNsLU0JbBh5AOznNS5Of5Y540l/koc7048='}
 
 #Email备份配置
 

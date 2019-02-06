@@ -110,7 +110,7 @@ Debian_apt()
 }
 Download_backup_code()
 {
-	wget -N --no-check-certificate "https://github.com/LoneKingCode/PyBackup/archive/1.1.zip" -O PyBackup.zip
+	wget -N --no-check-certificate "https://github.com/LoneKingCode/PyBackup/archive/1.2.zip" -O PyBackup.zip
 	unzip PyBackup.zip
 	rm -rf PyBackup.zip
 }
