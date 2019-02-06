@@ -5,9 +5,6 @@ import time
 import os
 from urllib import parse
 from util.filehelper import FileHelper
-import onedrivesdk
-from onedrivesdk.helpers import GetAuthCodeServer
-from onedrivesdk.helpers.resource_discovery import ResourceDiscoveryRequest
 
 reply_url = 'https://onedrive.live.com/about/business/'
 redirect_uri = 'http://localhost/onedrive-login'
