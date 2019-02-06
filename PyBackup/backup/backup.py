@@ -55,18 +55,20 @@ def backup():
 
 #清除旧备份文件
 def clear_old_backup():
-    #清除远程FTP上旧备份文件
-    for option in FTP_OPTIONS:
-        ftp = FtpHelper(option['host'],option['username'], option['password'],option['port'])
+    if 'ftp' in REMOTE_SAVE_TYPE:
+        #清除远程FTP上旧备份文件
+        for option in FTP_OPTIONS:
+            ftp = FtpHelper(option['host'],option['username'], option['password'],option['port'])
 
-        for filename in ftp.get_files(option['site_save_path']):
-            if is_oldfile(filename):
-                ftp.delete_file(option['site_save_path'],filename)
+            for filename in ftp.get_files(option['site_save_path']):
+                if is_oldfile(filename):
+                    ftp.delete_file(option['site_save_path'],filename)
 
-        for filename in ftp.get_files(option['db_save_path']):
-            if is_oldfile(filename):
-                ftp.delete_file(option['db_save_path'],filename)
-        ftp.quit()
+            for filename in ftp.get_files(option['db_save_path']):
+                if is_oldfile(filename):
+                    ftp.delete_file(option['db_save_path'],filename)
+            ftp.quit()
+
     #清除本地网站旧文件
     for root, dirs, files in os.walk(LOCAL_SAVE_PATH['sites']):
             for filename in files:
@@ -78,30 +80,30 @@ def clear_old_backup():
         for filename in files:
             if is_oldfile(filename):
                 FileHelper.delete(os.path.join(root, filename))
-
-    #清除oss旧文件
-    for option in OSS_OPTIONS:
-        oss = OssHelper(option['accesskeyid'],option['accesskeysecret'],option['url'],option['bucket'])
-        for file in oss.get_file_list(option['sitedir'].rstrip('/') + '/') + oss.get_file_list(option['databasedir'].rstrip('/') + '/'):
-            if is_oldfile(os.path.basename(file)):
-                oss.delete(file)
-
-    #清除cos旧文件
-    for option in COS_OPTIONS:
-        cos = CosHelper(option['accesskeyid'],option['accesskeysecret'],option['region'],option['bucket'])
-        for file in cos.get_file_list(option['sitedir'].rstrip('/') + '/') + cos.get_file_list(option['databasedir'].rstrip('/') + '/'):
-            if is_oldfile(os.path.basename(file)):
-                cos.delete(file)
-
-    #清除onedrive旧文件
-    for option in ONE_DRIVE_OPTION:
-        od = OneDriveHelper(option['name'])
-        for file in od.get_file_list(option['sitedir'].rstrip('/') + '/'):
-            if is_oldfile(os.path.basename(file['name'])):
-                od.delete(os.path.join(option['sitedir'],file['name']))
-        for file in od.get_file_list(option['databasedir'].rstrip('/') + '/'):
-            if is_oldfile(os.path.basename(file['name'])):
-                od.delete(os.path.join(option['databasedir'],file['name']))
+    if 'oss' in REMOTE_SAVE_TYPE:
+        #清除oss旧文件
+        for option in OSS_OPTIONS:
+            oss = OssHelper(option['accesskeyid'],option['accesskeysecret'],option['url'],option['bucket'])
+            for file in oss.get_file_list(option['sitedir'].rstrip('/') + '/') + oss.get_file_list(option['databasedir'].rstrip('/') + '/'):
+                if is_oldfile(os.path.basename(file)):
+                    oss.delete(file)
+    if 'css' in REMOTE_SAVE_TYPE:
+        #清除cos旧文件
+        for option in COS_OPTIONS:
+            cos = CosHelper(option['accesskeyid'],option['accesskeysecret'],option['region'],option['bucket'])
+            for file in cos.get_file_list(option['sitedir'].rstrip('/') + '/') + cos.get_file_list(option['databasedir'].rstrip('/') + '/'):
+                if is_oldfile(os.path.basename(file)):
+                    cos.delete(file)
+    if 'onedrive' in REMOTE_SAVE_TYPE:
+        #清除onedrive旧文件
+        for option in ONE_DRIVE_OPTION:
+            od = OneDriveHelper(option['name'])
+            for file in od.get_file_list(option['sitedir'].rstrip('/') + '/'):
+                if is_oldfile(os.path.basename(file['name'])):
+                    od.delete(os.path.join(option['sitedir'],file['name']))
+            for file in od.get_file_list(option['databasedir'].rstrip('/') + '/'):
+                if is_oldfile(os.path.basename(file['name'])):
+                    od.delete(os.path.join(option['databasedir'],file['name']))
     log('清除旧备份文件 完成')
 
 #是否为旧文件

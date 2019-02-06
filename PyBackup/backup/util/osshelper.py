@@ -46,12 +46,12 @@ class OssHelper:
         # 完成分片上传。
         self.bucket.complete_multipart_upload(key, upload_id, parts)
 
-        # 验证分片上传。
-        with open(filename, 'rb') as fileobj:
-            if not self.bucket.get_object(key).read() == fileobj.read():
-                msg='上传' + filename + '出错，验证分片失败'
-                print(msg)
-                LogHelper.info(msg)
+        ## 验证分片上传。
+        #with open(filename, 'rb') as fileobj:
+        #    if not self.bucket.get_object(key).read() == fileobj.read():
+        #        msg='上传' + filename + '出错，验证分片失败'
+        #        print(msg)
+        #        LogHelper.info(msg)
 
 
     def delete(self,obj_name):
