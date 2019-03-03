@@ -71,6 +71,7 @@ SITES = [{ 'type':'local','path':'D:\\wwwroot\\www.aa.com',
 #username: 数据库用户名
 #password: 数据库密码
 #host: 数据库服务器地址 为空代表本地
+#port: 数据库端口
 #archive_type: 7z,zip,tar(7zip支持的类型)
 #archive_password: 压缩包密码
 #sqlcmd_path 或 mysqldump_path : mssql和mysql命令行工具路径 windows下无需修改 linux请设置为''
@@ -81,9 +82,9 @@ SITES = [{ 'type':'local','path':'D:\\wwwroot\\www.aa.com',
 #mssql(Sql Server)
 #linux如果SQLCMD命令可以直接执行的话sqlcmd_path设置为'',windows下设置SQLCMD.exe位置,本程序plugin目录自带有(SQLSERVER2014)
 #命令行工具有需要可在plugin目录替换为你需要的版本
-DATABASES = [{'type':'mssql','database_name':'yourDatabaseName','username':'sa','password':'123','host':'123.123.123.123',
+DATABASES = [{'type':'mssql','database_name':'yourDatabaseName','username':'sa','password':'123','host':'123.123.123.123','port':'1433',
               'archive_type':'zip','archive_password':'123','sqlcmd_path':os.path.join(str(ROOT_DIR),'plugin') + '\\SQLCMD.exe'},
-            {'type':'mysql','database_name':'yourDatabaseName','username':'test','password':'asd','host':'aa.aa.com',
+            {'type':'mysql','database_name':'yourDatabaseName','username':'test','password':'asd','host':'aa.aa.com','port':'3306',
             'archive_type':'zip','archive_password':'123','mysqldump_path': os.path.join(str(ROOT_DIR),'plugin') + '\\mysqldump.exe'}]
 
 #保留几天内的文件
@@ -170,11 +171,12 @@ backup.py为主程序 如果要设置计划任务 设置为 python3 yourPath/bac
 ```
 
 ## 更新历史
+* 1.3
+      修正可指定数据库端口
 * 1.2
     * 支持备份到onedrive
 * 1.1
     * 能用
-
 * 1.0
     * 能用
 
