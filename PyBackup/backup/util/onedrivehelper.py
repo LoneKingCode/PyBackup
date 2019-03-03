@@ -109,7 +109,7 @@ class OneDriveHelper(object):
                 print(url)
                 print(data.get('error').get('message'))
             elif r.status_code == 201 or r.status_code == 200:
-                print('上传 {} 成功,保存位置{}!'.format(filepath,remote_path))
+                print('上传 {} 成功,保存位置{}'.format(filepath,remote_path))
             else:
                 print('上传失败')
                 print(data)

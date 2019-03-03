@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="backup\data\TextFile1.txt" />
+    <Content Include="backup\plugin\7z.dll" />
     <Content Include="backup\plugin\7z.exe" />
     <Content Include="backup\plugin\init.bat" />
     <Content Include="backup\plugin\cron.sh" />

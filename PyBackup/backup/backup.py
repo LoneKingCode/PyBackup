@@ -123,8 +123,8 @@ def is_oldfile(filename):
 #远程保存
 def remote_save(site_files,db_files):
     for type in REMOTE_SAVE_TYPE:
-        if type not in 'ftp,email,cos,oss,onedrive':
-            log('远程保存配置类型"' + type + '"错误，应该为ftp,email')
+        if type not in 'ftp,email,cos,oss,onedrive' or not type:
+            log('远程保存配置类型"' + type + '"错误，应该为ftp,email,cos,oss,onedrive')
             continue
         if type == 'ftp':
             remote_save_ftp(site_files , db_files)
@@ -143,6 +143,8 @@ def remote_save(site_files,db_files):
 def remote_save_onedrive(site_files,db_files):
     log('开始上传到OneDrive')
     for option in ONE_DRIVE_OPTION:
+        if not option:
+            continue
         print('开始上传到:' + option['name'])
         od = OneDriveHelper(option['name'])
         for file in site_files:
@@ -161,6 +163,8 @@ def remote_save_onedrive(site_files,db_files):
 def remote_save_oss(site_files,db_files):
     log('开始上传到oss')
     for option in OSS_OPTIONS:
+        if not option:
+            continue
         oss = OssHelper(option['accesskeyid'],option['accesskeysecret'],option['url'],option['bucket'])
         for file in site_files:
             if not file:
@@ -179,6 +183,8 @@ def remote_save_oss(site_files,db_files):
 def remote_save_cos(site_files,db_files):
     log('开始上传到cos')
     for option in COS_OPTIONS:
+        if not option:
+            continue
         cos = CosHelper(option['accesskeyid'],option['accesskeysecret'],option['region'],option['bucket'])
         for file in site_files:
             if not file:
@@ -241,6 +247,8 @@ def backup_site():
     site_files = []
     log('开始备份站点')
     for site in SITES:
+        if not site:
+            continue
         site_path = site['path']
         if site['type'] == 'ftp':
             ftp = FtpHelper(site['host'],site['username'], site['password'],site['port'])
@@ -272,6 +280,8 @@ def backup_site():
 def backup_db():
     db_files = []
     for db in DATABASES:
+        if not db:
+            continue
         db_type = db['type']
         if db_type not in 'mssql,mysql':
             log('type数据库类型错误,应该为mssql,mysql')
@@ -293,7 +303,7 @@ def backup_db_mssql(db):
         log('archive_type存档类型"' + archive_type + '"错误,应该为zip,tar,gztar')
         return None
     sqlcmd = 'sqlcmd' if not db['sqlcmd_path'] else db['sqlcmd_path']
-    cmd = '{0} -S {1} -U {2} -P {3} -Q "BACKUP DATABASE {4} to disk="{5}"'.format(sqlcmd,db['host'],db['username'],db['password'],db['database_name'],db_filepath)
+    cmd = '{0} -S {1},{2} -U {3} -P {4} -Q "BACKUP DATABASE {5} to disk="{6}"'.format(sqlcmd,db['host'],db['port'],db['username'],db['password'],db['database_name'],db_filepath)
     status,result = subprocess.getstatusoutput(cmd)
     if status != 0:
         log('备份数据库{0}出错,返回值为{1},执行的命令为{2}'.format(db['database_name'],result,cmd))
@@ -319,7 +329,7 @@ def backup_db_mysql(db):
         return None
     host = '' if not db['host']  else   '-h ' + db['host']
     mysqldump = 'mysqldump' if not db['mysqldump_path'] else db['mysqldump_path']
-    cmd = '{0} {1} -u{2} -p{3} --databases {4} > {5}'.format(mysqldump,host,db['username'],db['password'],db['database_name'],db_filepath)
+    cmd = '{0} {1} -P{2} -u{3} -p{4} --databases {5} > {6}'.format(mysqldump,host,db['port'],db['username'],db['password'],db['database_name'],db_filepath)
     status,result = subprocess.getstatusoutput(cmd)
     if status != 0:
         log('备份数据库{0}出错,返回值为{1},执行的命令为{2}'.format(db['database_name'],result,cmd))
