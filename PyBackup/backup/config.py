@@ -50,6 +50,9 @@ TEMP_SAVE_PATH = 'D:\\Save\\backuptemp'
 #email的话注意附件大小 有的限制是25MB 有的是50MB
 REMOTE_SAVE_TYPE = ['oss','cos','ftp','email','onedrive']
 
+#备份出错尝试次数
+ERROR_COUNT = 3
+
 #FTP备份配置
 #host: FTP服务器地址
 #port: FTP端口
@@ -82,7 +85,8 @@ COS_OPTIONS = [{'sitedir':'sites','databasedir':'databases','region':'ap-hongkon
 
 #OneDrive配置
 #name: 名称
-#用于区别配置文件中配置，可以设置为多个{'name':'backup1' .....},{'name':'backup2'.....}，这样的话需要你认证多次不同账户
+#用于区别配置文件中配置，可以设置为多个{'name':'backup1'
+#.....},{'name':'backup2'.....}，这样的话需要你认证多次不同账户
 #sitedir: 站点备份文件保存目录
 #databasedir: 数据库文件保存目录
 ONE_DRIVE_OPTION = [{'name':'backup1','sitedir':'sites','databasedir':'databases',}]

@@ -122,20 +122,28 @@ def is_oldfile(filename):
 
 #远程保存
 def remote_save(site_files,db_files):
+    errcount=0
     for type in REMOTE_SAVE_TYPE:
         if type not in 'ftp,email,cos,oss,onedrive' or not type:
             log('远程保存配置类型"' + type + '"错误，应该为ftp,email,cos,oss,onedrive')
             continue
-        if type == 'ftp':
-            remote_save_ftp(site_files , db_files)
-        elif type == 'email':
-            remote_save_email(site_files ,db_files)
-        elif type == 'oss':
-            remote_save_oss(site_files,db_files)
-        elif type == 'cos':
-            remote_save_cos(site_files,db_files)
-        elif type == 'onedrive':
-            remote_save_onedrive(site_files,db_files)
+        while errcount < ERROR_COUNT:
+            try:
+                if type == 'ftp':
+                    remote_save_ftp(site_files , db_files)
+                elif type == 'email':
+                    remote_save_email(site_files ,db_files)
+                elif type == 'oss':
+                    remote_save_oss(site_files,db_files)
+                elif type == 'cos':
+                    remote_save_cos(site_files,db_files)
+                elif type == 'onedrive':
+                    remote_save_onedrive(site_files,db_files)
+            except Exception as e:
+                log(str(e))
+                print(str(e))
+                errcount = errcount + 1
+                print('备份' + type + '方式第' + str(errcount) + '次出错')
     FileHelper.move_bulk(site_files,LOCAL_SAVE_PATH['sites'])
     FileHelper.move_bulk(db_files,LOCAL_SAVE_PATH['databases'])
 

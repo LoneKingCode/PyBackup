@@ -6,11 +6,11 @@ import os
 
 class FtpHelper:
     def __init__(self, host ,username,password,port = 21):
+        self.ftp = FTP()
         # self.ftp.set_debuglevel(2) #打开调试级别2，显示详细信息
-        # self.ftp.set_pasv(0) #0主动模式 1 #被动模式
+        self.ftp.set_pasv(0) #0主动模式 1 #被动模式
         self._isdir = False
         self.path = ""
-        self.ftp = FTP()
         self.ftp.encoding = 'utf-8'
         self.ftp.connect(host, port)
         self.ftp.login(username, password)
