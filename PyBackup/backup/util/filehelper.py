@@ -12,6 +12,14 @@ from config import WINDOWS_7ZIP_PATH
 
 class FileHelper(object):
     @staticmethod
+    def get_file_list(path):
+        filelist=[]
+        for root,dir,files in os.walk(path):
+            for file in files:
+                fullpath = os.path.join(root,file)
+                filelist.append(fullpath)
+        return filelist
+    @staticmethod
     def open_json(filepath):
         with open(filepath,'r') as f:
             try:
@@ -277,7 +285,7 @@ class FileHelper(object):
             return False,str(e)
 
     @staticmethod
-    def compress(type,filepath,save_dir='',save_file_name='',pwd=None,ignore_dir=None,ignore_ext=None,ignore_file=None):
+    def compress(type,filepath,save_dir='',save_file_name='',pwd=None,ignore_dir=None,ignore_ext=None,ignore_file=None,part=None):
         basename = os.path.basename(filepath)
         file_name = os.path.splitext(basename)[0]
         parent_dir = os.path.dirname(filepath)
@@ -288,6 +296,7 @@ class FileHelper(object):
         save_file_path = os.path.join(parent_dir,file_name) + '.' + type
         sysstr = platform.system()
         ignore_cmd = ''
+        part_cmd = ''
         if ignore_dir:
             for d in ignore_dir:
                 if d:
@@ -300,12 +309,14 @@ class FileHelper(object):
             for e in ignore_ext:
                 if e:
                     ignore_cmd+=' -xr!*.' + e
+        if part:
+            part_cmd = '-v' + part
         if sysstr == "Windows":
             pwdcmd = '-p' + pwd if pwd  else ''
-            cmd = WINDOWS_7ZIP_PATH + ' a -t{0} {1} {2} {3}'.format(type,pwdcmd + ' ' + ignore_cmd,save_file_path,filepath)
+            cmd = WINDOWS_7ZIP_PATH + ' a -t{0} {1} {2} {3}'.format(type,pwdcmd + ' ' + ignore_cmd + ' ' + part_cmd,save_file_path,filepath)
         elif sysstr == "Linux":
             pwdcmd = '-p' + pwd if pwd  else ''
-            cmd = '7za a -t{0} {1} {2} {3}'.format(type,pwdcmd + ' ' + ignore_cmd,save_file_path,filepath)
+            cmd = '7za a -t{0} {1} {2} {3}'.format(type,pwdcmd + ' ' + ignore_cmd + ' ' + part_cmd,save_file_path,filepath)
         else:
             return False,sysstr + '是啥系统?'
         status,result = subprocess.getstatusoutput(cmd)
@@ -487,5 +498,6 @@ if __name__ == '__main__':
     #files = [r'D:\Save\temp\bbb',r'D:\Save\temp\11.zip']
     #print(FileHelper.create_archive_bulk(files,'tar'))
     #FileHelper.untar(r'D:\Save\temp\11_9595199\11.tar.gz',r'D:\Save\temp\bbb')
-    print(FileHelper.compress('zip','D:\\Save\\temp\\MyApplication','D:\\Save\\backuptemp','testsite','123',".idea","properties","MyApplication.iml"))
+    #print(FileHelper.compress('zip','D:\\Save\\temp\\MyApplication','D:\\Save\\backuptemp','testsite','123',".idea","properties","MyApplication.iml"))
+    
     pass

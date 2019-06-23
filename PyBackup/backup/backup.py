@@ -9,7 +9,7 @@ from  util.filehelper import FileHelper
 from  util.coshelper import CosHelper
 from  util.osshelper import OssHelper
 from  util.onedrivehelper import OneDriveHelper
-from  config import *
+from  myconfig import *
 
 def log(msg):
     print(msg)
@@ -235,15 +235,38 @@ def remote_save_email(site_files,db_files):
         for file in site_files:
             if not file:
                 continue
-            flag,msg = email.send('新的站点备份','站点备份:' + os.path.basename(file),'站点备份:' + os.path.basename(file),EMAIL_OPTIONS_RECEIVERS,[file])
+            if option['partSize']:
+                part_file_path = os.path.join(TEMP_SAVE_PATH,'EmailPart')
+                if not os.path.exists(part_file_path):
+                    os.makedirs(part_file_path)
+                flag,msg = FileHelper.compress(option['archive_type'],file,part_file_path,os.path.basename(file),
+                                       None,None,None,None,option['partSize'])
+                part_files = FileHelper.get_file_list(part_file_path)
+                for part_file in part_files:
+                    flag,msg = email.send('新的站点备份','站点备份:' + os.path.basename(part_file),'站点备份:' + os.path.basename(part_file),EMAIL_OPTIONS_RECEIVERS,[part_file])
+                FileHelper.delete(part_file_path)
+            else:
+                flag,msg = email.send('新的站点备份','站点备份:' + os.path.basename(file),'站点备份:' + os.path.basename(file),EMAIL_OPTIONS_RECEIVERS,[file])
             if flag:
                 log('使用 {0} 发送邮件 {1} 成功'.format(option['username'],file))
             else:
                 log('使用 {0} 发送邮件 {1} 失败，原因:'.format(option['username'],file,msg))
+        
         for file in db_files:
             if not file:
                 continue
-            flag,msg = email.send('新的数据库备份','数据库备份:' + os.path.basename(file),'数据库备份:' + os.path.basename(file),EMAIL_OPTIONS_RECEIVERS,[file])
+            if option['partSize']:
+                if not os.path.exists(part_file_path):
+                   os.makedirs(part_file_path)
+                part_file_path = os.path.join(TEMP_SAVE_PATH,'EmailPart')
+                flag,msg = FileHelper.compress(option['archive_type'],file,part_file_path,os.path.basename(file),
+                                       None,None,None,None,option['partSize'])
+                part_files = FileHelper.get_file_list(part_file_path)
+                for part_file in part_files:
+                    flag,msg = email.send('新的数据库备份','数据库备份:' + os.path.basename(part_file),'数据库备份:' + os.path.basename(part_file),EMAIL_OPTIONS_RECEIVERS,[part_file])
+                FileHelper.delete(part_file_path)
+            else:
+                flag,msg = email.send('新的数据库备份','数据库备份:' + os.path.basename(file),'数据库备份:' + os.path.basename(file),EMAIL_OPTIONS_RECEIVERS,[file])
             if flag:
                 log('使用 {0} 发送邮件 {1} 成功'.format(option['username'],file))
             else:
