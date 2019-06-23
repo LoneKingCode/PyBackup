@@ -68,7 +68,8 @@ backup.py为主程序 如果要设置计划任务 设置为 python3 yourPath/bac
 ## 更新历史
 * 2019.6.23  
          1.添加忽略文件，目录，后缀  
-         2.设置ftp的被动/主动模式
+         2.设置ftp的被动/主动模式  
+         3.支持email分卷
 ## 关于作者
 
 LoneKing – [@LoneKing's Blog](https://loneking.net) 
