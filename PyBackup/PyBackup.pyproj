@@ -27,9 +27,6 @@
     </Compile>
     <Compile Include="backup\backup.py" />
     <Compile Include="backup\config.py" />
-    <Compile Include="backup\config_template.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="backup\myconfig.py">
       <SubType>Code</SubType>
     </Compile>

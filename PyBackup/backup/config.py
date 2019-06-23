@@ -8,10 +8,14 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 #archive_type: 7z,zip,tar(7zip支持的类型)
 #archive_password: 压缩包密码
 #type为ftp时需要额外配置: host:FTP服务器地址 port:端口 username:用户名 password:密码
-SITES = [{ 'type':'local','path':'D:\\wwwroot\\www.aa.com',
+#ignoreFile: 忽略文件名
+#ignoreDir: 忽略文件夹名
+#ignoreExt: 忽略后缀
+#pasv: ftp的模式 0主动模式 1 #被动模式
+SITES = [{ 'type':'local','path':'D:\\wwwroot\\www.aa.com','ignore_dir':['dir'],'ignore_ext':['txt'],'ignore_file':['asd.txt'],
          'archive_type':'zip','archive_password':'123' },
          {  'type':'ftp', 'path':'/WEB',  'archive_type':'zip','archive_password':'123',
-          'host':'yourFtpUrl','port':21,'username':'yourFtpUsername','password':'yourFtpPwd'}]
+          'host':'yourFtpUrl','port':21,'username':'yourFtpUsername','password':'yourFtpPwd','pasv':0}]
 
 #备份的数据库
 #type: 数据库类型 mssql,mysql
@@ -60,8 +64,9 @@ ERROR_COUNT = 3
 #password: FTP密码
 #site_save_path: 站点备份文件保存的路径 确保路径已经存在
 #db_save_path: 数据库备份文件保存的路径 确保路径已经存在
+#pasv: ftp的模式 0主动模式 1 #被动模式
 FTP_OPTIONS = [{'host':'yourFtpUrl','port':21,'username':'yourFtpUsername','password':'yourPwd',
-                'site_save_path':'/backup/sites','db_save_path':'/backup/databases'},]
+                'site_save_path':'/backup/sites','db_save_path':'/backup/databases','pasv':0},]
 
 #阿里云OSS配置
 #sitedir: 站点备份文件保存目录

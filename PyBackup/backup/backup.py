@@ -9,7 +9,7 @@ from  util.filehelper import FileHelper
 from  util.coshelper import CosHelper
 from  util.osshelper import OssHelper
 from  util.onedrivehelper import OneDriveHelper
-from  config import *
+from  myconfig import *
 
 def log(msg):
     print(msg)
@@ -58,7 +58,7 @@ def clear_old_backup():
     if 'ftp' in REMOTE_SAVE_TYPE:
         #清除远程FTP上旧备份文件
         for option in FTP_OPTIONS:
-            ftp = FtpHelper(option['host'],option['username'], option['password'],option['port'])
+            ftp = FtpHelper(option['host'],option['username'], option['password'],option['port'],option['pasv'])
 
             for filename in ftp.get_files(option['site_save_path']):
                 if is_oldfile(filename):
@@ -139,6 +139,7 @@ def remote_save(site_files,db_files):
                     remote_save_cos(site_files,db_files)
                 elif type == 'onedrive':
                     remote_save_onedrive(site_files,db_files)
+                break
             except Exception as e:
                 log(str(e))
                 print(str(e))
@@ -211,7 +212,7 @@ def remote_save_cos(site_files,db_files):
 def remote_save_ftp(site_files,db_files):
     log('开始上传到FTP')
     for option in FTP_OPTIONS:
-        ftp = FtpHelper(option['host'],option['username'], option['password'],option['port'])
+        ftp = FtpHelper(option['host'],option['username'], option['password'],option['port'],option['pasv'])
         for file in site_files:
             if not file:
                 continue
@@ -259,7 +260,7 @@ def backup_site():
             continue
         site_path = site['path']
         if site['type'] == 'ftp':
-            ftp = FtpHelper(site['host'],site['username'], site['password'],site['port'])
+            ftp = FtpHelper(site['host'],site['username'], site['password'],site['port'],site['pasv'])
             log('开始下载FTP远程目录:' + site['path'])
             ftp.download_dir(os.path.join(TEMP_SAVE_PATH ,os.path.basename(site['path'])),site['path'])
             log('下载FTP远程目录结束')
@@ -273,7 +274,8 @@ def backup_site():
             continue
         dirname = os.path.basename(site_path)
         site_filename = dirname + '_' + get_datestr()
-        flag,msg = FileHelper.compress(archive_type,site_path,TEMP_SAVE_PATH,site_filename,site['archive_password'])
+        flag,msg = FileHelper.compress(archive_type,site_path,TEMP_SAVE_PATH,site_filename,
+                                       site['archive_password'],site['ignore_dir'],site['ignore_ext'],site['ignore_file'])
         if site['type'] == 'ftp':
             FileHelper.delete(site_path)
         if not flag:

@@ -149,7 +149,7 @@ class FileHelper(object):
 
 
     @staticmethod
-    def tar(filepath,tartype = 'tar',save_dir = '',save_file_name = '', mode = 'w'):
+    def tar(filepath,tartype='tar',save_dir='',save_file_name='', mode='w'):
         """创建tar文件
         tartype tar或gztar 默认值 tar
         save_dir 保存目录 默认为当前目录
@@ -193,7 +193,7 @@ class FileHelper(object):
             return False,str(e)
 
     @staticmethod
-    def untar(filepath,save_dir = ''):
+    def untar(filepath,save_dir=''):
         """提取tar文件
         "save_dir 保存目录 默认为当前目录
         返回 flag,msg   flag:操作是否成功 msg成功则为提取路径，失败则为错误信息
@@ -224,7 +224,7 @@ class FileHelper(object):
 
 
     @staticmethod
-    def zip(filepath,save_dir = '',save_file_name = '',mode = 'w'):
+    def zip(filepath,save_dir='',save_file_name='',mode='w'):
         """创建zip压缩文件
         save_dir 保存目录 默认为当前目录
         save_file_name 压缩包文件名 不包含后缀
@@ -258,7 +258,7 @@ class FileHelper(object):
             return False,str(e)
 
     @staticmethod
-    def unzip(filepath,save_dir = ''):
+    def unzip(filepath,save_dir=''):
         """解压zip压缩文件
         "save_dir 保存目录 默认为当前目录
         返回 flag,msg   flag:操作是否成功 msg成功则为解压路径，失败则为错误信息
@@ -277,7 +277,7 @@ class FileHelper(object):
             return False,str(e)
 
     @staticmethod
-    def compress(type,filepath,save_dir = '',save_file_name = '',pwd = None):
+    def compress(type,filepath,save_dir='',save_file_name='',pwd=None,ignore_dir=None,ignore_ext=None,ignore_file=None):
         basename = os.path.basename(filepath)
         file_name = os.path.splitext(basename)[0]
         parent_dir = os.path.dirname(filepath)
@@ -287,12 +287,25 @@ class FileHelper(object):
              parent_dir = save_dir
         save_file_path = os.path.join(parent_dir,file_name) + '.' + type
         sysstr = platform.system()
+        ignore_cmd = ''
+        if ignore_dir:
+            for d in ignore_dir:
+                if d:
+                    ignore_cmd+=' -xr!' + d
+        if ignore_file:
+            for f in ignore_file:
+                if f:
+                    ignore_cmd+=' -xr!' + f
+        if ignore_ext:
+            for e in ignore_ext:
+                if e:
+                    ignore_cmd+=' -xr!*.' + e
         if sysstr == "Windows":
             pwdcmd = '-p' + pwd if pwd  else ''
-            cmd = WINDOWS_7ZIP_PATH + ' a -t{0} {1} {2} {3}'.format(type,pwdcmd,save_file_path,filepath)
+            cmd = WINDOWS_7ZIP_PATH + ' a -t{0} {1} {2} {3}'.format(type,pwdcmd + ' ' + ignore_cmd,save_file_path,filepath)
         elif sysstr == "Linux":
             pwdcmd = '-p' + pwd if pwd  else ''
-            cmd = '7za a -t{0} {1} {2} {3}'.format(type,pwdcmd,save_file_path,filepath)
+            cmd = '7za a -t{0} {1} {2} {3}'.format(type,pwdcmd + ' ' + ignore_cmd,save_file_path,filepath)
         else:
             return False,sysstr + '是啥系统?'
         status,result = subprocess.getstatusoutput(cmd)
@@ -300,7 +313,7 @@ class FileHelper(object):
         return flag,save_file_path if flag else result
 
     @staticmethod
-    def create_archive(filepath,archive_type,save_file_name = '',mode = 'w',save_dir = '',pwd = None):
+    def create_archive(filepath,archive_type,save_file_name='',mode='w',save_dir='',pwd=None):
         """创建文件/文件夹存档
         archive_type有效值 zip tar gztar
         save_file_name 压缩包文件名 不包含后缀
@@ -474,5 +487,5 @@ if __name__ == '__main__':
     #files = [r'D:\Save\temp\bbb',r'D:\Save\temp\11.zip']
     #print(FileHelper.create_archive_bulk(files,'tar'))
     #FileHelper.untar(r'D:\Save\temp\11_9595199\11.tar.gz',r'D:\Save\temp\bbb')
-    print(FileHelper.compress('zip','D:\\Save\\temp\\testsite','D:\\Save\\backuptemp','testsite','123'))
+    print(FileHelper.compress('zip','D:\\Save\\temp\\MyApplication','D:\\Save\\backuptemp','testsite','123',".idea","properties","MyApplication.iml"))
     pass
