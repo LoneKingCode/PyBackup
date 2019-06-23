@@ -1,10 +1,12 @@
 # PyBackup
-> 自动备份站点目录和数据库
+> 自动备份目录和数据库
 
 
-可以备份本地站点及数据库(mysql,mssql)，和远程FTP站点及远程数据库(mysql,mssql),
+可以备份本地目录及数据库(mysql,mssql)，和远程FTP目录及远程数据库(mysql,mssql),
 
-同步备份文件到Ftp,阿里云Oss,腾讯云Cos,OneDrive,Email,还有本地，并删除指定天数的旧备份文件
+同步备份文件到Ftp,阿里云Oss,腾讯云Cos,OneDrive,Email,还有本地，并删除指定天数的旧备份文件，
+
+支持忽略文件，目录，后缀
 
 
 ### 需要的环境
