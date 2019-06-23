@@ -9,7 +9,7 @@ from  util.filehelper import FileHelper
 from  util.coshelper import CosHelper
 from  util.osshelper import OssHelper
 from  util.onedrivehelper import OneDriveHelper
-from  myconfig import *
+from  config import *
 
 def log(msg):
     print(msg)

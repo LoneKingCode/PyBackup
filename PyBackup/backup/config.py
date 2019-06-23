@@ -104,7 +104,8 @@ ONE_DRIVE_CLIENT = {'client_id':'ea2b36f6-b8ad-40be-bc0f-e5e4a4a7d4fa','client_s
 #发送配置
 #host: 邮箱smtp服务器地址
 #username: 用户名 password:密码 port:端口 is_ssl:是否ssl加密连接 True或者False
-EMAIL_OPTIONS_SENDERS = [{'host':'smtp.AA.com','username':'AA@AA.com','password':'123446','port':465,'is_ssl':True},]
+#partSize: 分卷大小  因为有的邮箱限制附件大小 可以分卷发送 为''空则不分卷
+EMAIL_OPTIONS_SENDERS = [{'host':'smtp.AA.com','username':'AA@AA.com','password':'123446','port':465,'is_ssl':True,'partSize':'2m','archive_type':'zip'},]
 
 #接收邮箱
 EMAIL_OPTIONS_RECEIVERS = ['receivebackup@foxmail.com',]
