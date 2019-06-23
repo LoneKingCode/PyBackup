@@ -85,7 +85,7 @@ Check_python(){
 	fi
 	#°²×°ÒÀÀµ
 	pip3 install --upgrade pip
-    pip3 install oss2 cos-python-sdk-v5 PyExecJS
+    pip3 install oss2 cos-python-sdk-v5
 }
 Centos_yum()
 {
