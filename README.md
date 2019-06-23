@@ -17,7 +17,7 @@ pip3 install --upgrade pip
 pip3 install oss2 cos-python-sdk-v5
 ```
 ### 安装
-Linux一键配置环境
+Linux
 
 ```sh
 wget --no-check-certificate https://raw.githubusercontent.com/LoneKingCode/PyBackup/master/PyBackup/backup/plugin/init.sh -O pybackup.sh && bash pybackup.sh
