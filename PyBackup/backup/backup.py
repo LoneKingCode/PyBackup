@@ -51,7 +51,13 @@ def backup():
     site_files = backup_site()
     db_files = backup_db()
     remote_save(site_files,db_files)
-    clear_old_backup()
+    try:
+        clear_old_backup()
+    except Exception as e:
+        log(str(e))
+        print(str(e))
+        print('清除旧文件出错')
+        
 
 #清除旧备份文件
 def clear_old_backup():
@@ -122,7 +128,7 @@ def is_oldfile(filename):
 
 #远程保存
 def remote_save(site_files,db_files):
-    errcount=0
+    errcount = 0
     for type in REMOTE_SAVE_TYPE:
         if type not in 'ftp,email,cos,oss,onedrive' or not type:
             log('远程保存配置类型"' + type + '"错误，应该为ftp,email,cos,oss,onedrive')
