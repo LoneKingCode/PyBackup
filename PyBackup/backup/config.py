@@ -2,6 +2,10 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+#文件名称分隔符，分隔符后面为日期 name#yyyy-MM-dd-hh-mm-ss
+#默认无需更改，防止备份的文件夹名包含此符号
+filename_split='#'
+
 #备份的站点目录
 #type: local,ftp local(本地),ftp(远程站点备份)
 #path: 要备份的目录

@@ -115,7 +115,7 @@ def clear_old_backup():
 #是否为旧文件
 def is_oldfile(filename):
     try:
-        filenames = filename.split('_')  #name_'%Y-%m-%d-%H-%M-%S.zip'
+        filenames = filename.split(filename_split)  #name#'%Y-%m-%d-%H-%M-%S.zip'
         filedatestr = filenames[1].split('-')[:6]
         filedatestr[5] = filedatestr[5].split('.')[0]
         filedatestr = '-'.join(filedatestr)
@@ -302,7 +302,7 @@ def backup_site():
             log('archive_type存档类型"' + archive_type + '"错误,应该为zip,tar,gztar')
             continue
         dirname = os.path.basename(site_path)
-        site_filename = dirname + '_' + get_datestr()
+        site_filename = dirname + filename_split + get_datestr()
         flag,msg = FileHelper.compress(archive_type,site_path,TEMP_SAVE_PATH,site_filename,
                                        site['archive_password'],site['ignore_dir'],site['ignore_ext'],site['ignore_file'])
         if site['type'] == 'ftp':
@@ -335,7 +335,7 @@ def backup_db():
 
 #备份 mssql 数据库
 def backup_db_mssql(db):
-    db_filename = db['database_name'] + '_' + get_datestr() + '.bak'
+    db_filename = db['database_name'] + filename_split + get_datestr() + '.bak'
     db_filepath = TEMP_SAVE_PATH + os.path.sep + db_filename
     archive_type = db['archive_type']
     if archive_type not in 'zip,tar,gztar':
@@ -360,7 +360,7 @@ def backup_db_mssql(db):
 
 #备份 mysql 数据库
 def backup_db_mysql(db):
-    db_filename = db['database_name'] + '_' + get_datestr() + '.sql'
+    db_filename = db['database_name'] + filename_split + get_datestr() + '.sql'
     db_filepath = TEMP_SAVE_PATH + os.path.sep + db_filename
     archive_type = db['archive_type']
     if archive_type not in 'zip,tar,gztar':
