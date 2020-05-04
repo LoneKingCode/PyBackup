@@ -69,10 +69,11 @@ def clear_old_backup():
             for filename in ftp.get_files(option['site_save_path']):
                 if is_oldfile(filename):
                     ftp.delete_file(option['site_save_path'],filename)
-
+                    log('删除远程FTP文件:' + filename)
             for filename in ftp.get_files(option['db_save_path']):
                 if is_oldfile(filename):
                     ftp.delete_file(option['db_save_path'],filename)
+                    log('删除远程FTP文件:' + filename)
             ftp.quit()
 
     #清除本地网站旧文件
@@ -80,26 +81,31 @@ def clear_old_backup():
             for filename in files:
                 if is_oldfile(filename):
                     FileHelper.delete(os.path.join(root, filename))
+                    log('删除本地文件:' + filename)
 
     #清除本地数据库旧文件
     for root, dirs, files in os.walk(LOCAL_SAVE_PATH['databases']):
         for filename in files:
             if is_oldfile(filename):
                 FileHelper.delete(os.path.join(root, filename))
+                log('删除本地文件:' + filename)
     if 'oss' in REMOTE_SAVE_TYPE:
         #清除oss旧文件
         for option in OSS_OPTIONS:
             oss = OssHelper(option['accesskeyid'],option['accesskeysecret'],option['url'],option['bucket'])
+            print(oss.get_file_list(option['sitedir'].rstrip('/') + '/'))
             for file in oss.get_file_list(option['sitedir'].rstrip('/') + '/') + oss.get_file_list(option['databasedir'].rstrip('/') + '/'):
                 if is_oldfile(os.path.basename(file)):
                     oss.delete(file)
-    if 'css' in REMOTE_SAVE_TYPE:
+                    log('删除OSS文件:' + filename)
+    if 'cos' in REMOTE_SAVE_TYPE:
         #清除cos旧文件
         for option in COS_OPTIONS:
             cos = CosHelper(option['accesskeyid'],option['accesskeysecret'],option['region'],option['bucket'])
             for file in cos.get_file_list(option['sitedir'].rstrip('/') + '/') + cos.get_file_list(option['databasedir'].rstrip('/') + '/'):
                 if is_oldfile(os.path.basename(file)):
                     cos.delete(file)
+                    log('删除COS文件:' + filename)
     if 'onedrive' in REMOTE_SAVE_TYPE:
         #清除onedrive旧文件
         for option in ONE_DRIVE_OPTION:
@@ -107,16 +113,18 @@ def clear_old_backup():
             for file in od.get_file_list(option['sitedir'].rstrip('/') + '/'):
                 if is_oldfile(os.path.basename(file['name'])):
                     od.delete(os.path.join(option['sitedir'],file['name']))
+                    log('删除OneDrive文件:' + filename)
             for file in od.get_file_list(option['databasedir'].rstrip('/') + '/'):
                 if is_oldfile(os.path.basename(file['name'])):
                     od.delete(os.path.join(option['databasedir'],file['name']))
+                    log('删除OneDrive文件:' + filename)
     log('清除旧备份文件 完成')
 
 #是否为旧文件
 def is_oldfile(filename):
     try:
-        filenames = filename.split(filename_split)  #name#'%Y-%m-%d-%H-%M-%S.zip'
-        filedatestr = filenames[1].split('-')[:6]
+        filenames = filename.split(filename_split)  #name-%Y-%m-%d-%H-%M-%S.zip
+        filedatestr = filename.split('-')[1:7]
         filedatestr[5] = filedatestr[5].split('.')[0]
         filedatestr = '-'.join(filedatestr)
         filedate = datetime.datetime.strptime(filedatestr, '%Y-%m-%d-%H-%M-%S')
