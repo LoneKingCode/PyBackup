@@ -72,7 +72,7 @@ backup.py为主程序 如果要设置计划任务 设置为 python3 yourPath/bac
          3.支持email分卷
 ## 关于作者
 
-LoneKing – [@LoneKing's Blog](https://loneking.net) 
+LoneKing – [@LoneKing's Blog](https://loneking.cn) 
 
 
 [https://github.com/LoneKingCode/PyBackup](https://github.com/LoneKingCode/PyBackup)
