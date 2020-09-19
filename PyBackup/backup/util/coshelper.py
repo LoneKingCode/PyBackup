@@ -32,8 +32,8 @@ class CosHelper:
         response = self.client.upload_file(Bucket=self.bucket,
             LocalFilePath=filepath,
             Key=upload_path,
-            PartSize=10,
-            MAXThread=10,
+            PartSize=1,
+            MAXThread=5,
             EnableMD5=False)
 
     def delete(self,obj_name):
