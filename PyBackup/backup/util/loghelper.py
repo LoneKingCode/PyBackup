@@ -7,6 +7,7 @@ class LogHelper(object):
     BASE_DIR = os.path.abspath(os.path.dirname(__file__)) #项目路径
     rootPath = os.path.split(BASE_DIR)[0]
     path = os.path.join(rootPath,'log')
+    os.makedirs(path)
     level_relations = {
         'debug':logging.DEBUG,
         'info':logging.INFO,
