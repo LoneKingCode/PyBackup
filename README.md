@@ -11,12 +11,12 @@
 
 ### 需要的环境
 ```
-python3以及库oss2和cos-python-sdk-v5
+python3以及库requests,oss2和cos-python-sdk-v5
 windows上需要7z.exe，mysqldump.exe,SQLCMD.exe,SQLCMD.rll 在本程序plugins目录已中自带有无需下载
 linux上需要安装p7zip(确保7za命令可以执行),mysqldump是安装mysql时附带的,sqlcmd这个是mssql的命令行工具,linux上也有https://docs.microsoft.com/zh-cn/sql/linux/sql-server-linux-setup-tools?view=sql-server-2017 暂
 如果以下一键包安装出现问题，在安装python3成功后自行安装依赖库
 pip3 install --upgrade pip
-pip3 install oss2 cos-python-sdk-v5
+pip3 install oss2 cos-python-sdk-v5 requests
 ```
 ### 安装
 Linux
